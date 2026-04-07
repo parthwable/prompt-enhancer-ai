@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prompt Enhancer AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    p {
+      color: #cbd5f5;
+      line-height: 1.6;
+    }
+
+    textarea {
+      width: 90%;
+      height: 120px;
+      border-radius: 12px;
+      padding: 12px;
+      border: none;
+      margin-top: 15px;
+      font-size: 16px;
+    }
+
+    select {
+      margin: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+    }
+
+    button {
+      background: #22c55e;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: none;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    #output {
+      margin-top: 20px;
+      background: #1e293b;
+      padding: 15px;
+      border-radius: 12px;
+    }
+
+    .section {
+      margin-top: 40px;
+    }
+
+    .card {
+      background: #1e293b;
+      margin: 15px;
+      padding: 20px;
+      border-radius: 15px;
+    }
+
+    .check {
+      color: #22c55e;
+      font-size: 20px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🚀 Prompt Enhancer AI</h1>
+
+  <p>
+    Elevate your AI prompts with powerful, structured, and optimized results.
+    Get better outputs instantly with AI-powered enhancement.
+  </p>
+
+  <textarea id="input" placeholder="Enter your prompt..."></textarea>
+
+  <br>
+
+  <select id="category">
+    <option>YouTube Script</option>
+    <option>Study</option>
+    <option>Coding</option>
+    <option>Business</option>
+    <option>Image Generation</option>
+  </select>
+
+  <select id="tone">
+    <option>Professional</option>
+    <option>Creative</option>
+    <option>Funny</option>
+    <option>Motivational</option>
+  </select>
+
+  <br>
+
+  <button onclick="enhance()">Enhance Prompt</button>
+
+  <div id="output">Your enhanced prompt will appear here...</div>
+
+  <!-- FEATURES -->
+  <div class="section">
+    <h2>✨ Features</h2>
+
+    <div class="card">
+      <div class="check">✔</div>
+      <h3>Step-by-Step Improvement</h3>
+      <p>Improve prompts through structured and iterative refinement.</p>
+    </div>
+
+    <div class="card">
+      <div class="check">✔</div>
+      <h3>AI-Powered Analysis</h3>
+      <p>Get smart suggestions to improve clarity and effectiveness.</p>
+    </div>
+
+    <div class="card">
+      <div class="check">✔</div>
+      <h3>Clarity & Precision</h3>
+      <p>Transform vague prompts into clear, powerful instructions.</p>
+    </div>
+
+  </div>
+
+  <!-- STEPS -->
+  <div class="section">
+    <h2>📌 How It Works</h2>
+
+    <div class="card">
+      <p>1. Enter your prompt</p>
+      <p>2. AI analyzes and improves it</p>
+      <p>3. Get optimized output instantly</p>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  async function enhance() {
+    const input = document.getElementById("input").value;
+    const category = document.getElementById("category").value;
+    const tone = document.getElementById("tone").value;
+
+    document.getElementById("output").innerText = "Enhancing...";
+
+    const response = await fetch("YOUR_BACKEND_URL", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        prompt: input,
+        category: category,
+        tone: tone
+      })
+    });
+
+    const data = await response.json();
+    document.getElementById("output").innerText = data.result;
+  }
+</script>
+
+</body>
+</html>
