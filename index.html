@@ -93,11 +93,15 @@ async function enhance() {
 
   outputDiv.innerText = "Enhancing... 🚀";
 
-  // 🔑 Your Hugging Face API key (direct, no Base64)
-  const apiKey = "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"; // <-- replace with your Hugging Face key
+  // 🔑 Your Hugging Face API key (replace with your real key)
+  const apiKey = "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";
 
   try {
-    const response = await fetch("https://api-inference.huggingface.co/models/google/flan-t5-large", {
+    // Proxy to bypass CORS
+    const proxyUrl = "https://api.allorigins.win/raw?url=";
+    const hfUrl = "https://api-inference.huggingface.co/models/google/flan-t5-large";
+
+    const response = await fetch(proxyUrl + encodeURIComponent(hfUrl), {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${apiKey}`,
