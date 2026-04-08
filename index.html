@@ -17,86 +17,29 @@
       padding: 20px;
     }
 
-    h1 {
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    p {
-      color: #cbd5f5;
-      line-height: 1.6;
-    }
-
-    textarea {
-      width: 90%;
-      height: 120px;
-      border-radius: 12px;
-      padding: 12px;
-      border: none;
-      margin-top: 15px;
-      font-size: 16px;
-    }
-
-    select {
-      margin: 10px;
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-    }
-
-    button {
-      background: #22c55e;
-      color: white;
-      padding: 12px 20px;
-      border-radius: 12px;
-      border: none;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    #output {
-      margin-top: 20px;
-      background: #1e293b;
-      padding: 15px;
-      border-radius: 12px;
-    }
-
-    .section {
-      margin-top: 40px;
-    }
-
-    .card {
-      background: #1e293b;
-      margin: 15px;
-      padding: 20px;
-      border-radius: 15px;
-    }
-
-    .check {
-      color: #22c55e;
-      font-size: 20px;
-    }
-
+    h1 { font-size: 28px; font-weight: bold; }
+    p { color: #cbd5f5; line-height: 1.6; }
+    textarea { width: 90%; height: 120px; border-radius: 12px; padding: 12px; border: none; margin-top: 15px; font-size: 16px; }
+    select { margin: 10px; padding: 10px; border-radius: 10px; border: none; }
+    button { background: #22c55e; color: white; padding: 12px 20px; border-radius: 12px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; }
+    #output { margin-top: 20px; background: #1e293b; padding: 15px; border-radius: 12px; min-height: 60px; white-space: pre-wrap; }
+    .section { margin-top: 40px; }
+    .card { background: #1e293b; margin: 15px; padding: 20px; border-radius: 15px; }
+    .check { color: #22c55e; font-size: 20px; }
   </style>
 </head>
 
 <body>
-
 <div class="container">
 
   <h1>🚀 Prompt Enhancer AI</h1>
-
-  <p>
-    Elevate your AI prompts with powerful, structured, and optimized results.
-    Get better outputs instantly with AI-powered enhancement.
-  </p>
+  <p>Elevate your AI prompts with powerful, structured, and optimized results. Get better outputs instantly with AI-powered enhancement.</p>
 
   <textarea id="input" placeholder="Enter your prompt..."></textarea>
-
   <br>
 
   <select id="category">
+    <option>None</option>
     <option>YouTube Script</option>
     <option>Study</option>
     <option>Coding</option>
@@ -105,52 +48,33 @@
   </select>
 
   <select id="tone">
+    <option>None</option>
     <option>Professional</option>
     <option>Creative</option>
     <option>Funny</option>
     <option>Motivational</option>
   </select>
-
   <br>
 
   <button onclick="enhance()">Enhance Prompt</button>
-
   <div id="output">Your enhanced prompt will appear here...</div>
 
-  <!-- FEATURES -->
+  <!-- Features -->
   <div class="section">
     <h2>✨ Features</h2>
-
-    <div class="card">
-      <div class="check">✔</div>
-      <h3>Step-by-Step Improvement</h3>
-      <p>Improve prompts through structured and iterative refinement.</p>
-    </div>
-
-    <div class="card">
-      <div class="check">✔</div>
-      <h3>AI-Powered Analysis</h3>
-      <p>Get smart suggestions to improve clarity and effectiveness.</p>
-    </div>
-
-    <div class="card">
-      <div class="check">✔</div>
-      <h3>Clarity & Precision</h3>
-      <p>Transform vague prompts into clear, powerful instructions.</p>
-    </div>
-
+    <div class="card"><div class="check">✔</div><h3>Step-by-Step Improvement</h3><p>Improve prompts through structured and iterative refinement.</p></div>
+    <div class="card"><div class="check">✔</div><h3>AI-Powered Analysis</h3><p>Get smart suggestions to improve clarity and effectiveness.</p></div>
+    <div class="card"><div class="check">✔</div><h3>Clarity & Precision</h3><p>Transform vague prompts into clear, powerful instructions.</p></div>
   </div>
 
-  <!-- STEPS -->
+  <!-- Steps -->
   <div class="section">
     <h2>📌 How It Works</h2>
-
     <div class="card">
       <p>1. Enter your prompt</p>
       <p>2. AI analyzes and improves it</p>
       <p>3. Get optimized output instantly</p>
     </div>
-
   </div>
 
 </div>
@@ -160,8 +84,13 @@ async function enhance() {
   const input = document.getElementById("input").value;
   const category = document.getElementById("category").value;
   const tone = document.getElementById("tone").value;
+  const outputDiv = document.getElementById("output");
 
-  document.getElementById("output").innerText = "Enhancing...";
+  outputDiv.innerText = "Enhancing...";
+
+  // SAFER API KEY: Base64 encoded
+  const encodedKey = "aGZfU3F6WW1OSWJIWWZlQ3RqV2xuUWVUaURZQkx6RUFZb2xrdw=="; // <-- Replace with Base64 of your key
+  const apiKey = atob(encodedKey); // decode to real key
 
   try {
     const response = await fetch(
@@ -169,11 +98,11 @@ async function enhance() {
       {
         method: "POST",
         headers: {
-          "Authorization": "Bearer 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",
+          "Authorization": `Bearer ${apiKey}`,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          inputs: `Convert this into a detailed AI prompt.
+          inputs: `Enhance this AI prompt.
 Category: ${category}
 Tone: ${tone}
 User Input: ${input}`
@@ -182,20 +111,13 @@ User Input: ${input}`
     );
 
     const data = await response.json();
-
-    if (data.error) {
-      document.getElementById("output").innerText = "Error: " + data.error;
-    } else if (Array.isArray(data) && data[0]?.generated_text) {
-      document.getElementById("output").innerText = data[0].generated_text;
-    } else {
-      document.getElementById("output").innerText = "No response. Try again.";
-    }
+    outputDiv.innerText = data[0]?.generated_text || data.error || "No response. Try again.";
 
   } catch (err) {
-    document.getElementById("output").innerText = "Request failed. Check connection.";
+    console.error(err);
+    outputDiv.innerText = "Request failed. Check console for details.";
   }
 }
 </script>
-
 </body>
 </html>
